@@ -1,0 +1,31 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: api-gateway-server
+  cloud:
+    gateway:
+      default-filters:
+        - name: LoggingFilter
+          args:
+            preLogger: true
+            postLogger: true
+      routes:
+        - id: api-server
+          uri: lb://API-SERVER
+          predicates:
+            - Path=/api/v1/homes/**, /api/v1/devices/**
+        - id: scenario-server
+          uri: lb://SCENARIO-SERVER
+          predicates:
+            - Path=/api/v1/scenario/**
+        - id: websocket-server
+          uri: lb://WEBSOCKET-SERVER
+          predicates:
+            - Path=/websocket/connect
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
