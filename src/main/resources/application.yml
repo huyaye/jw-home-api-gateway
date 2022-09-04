@@ -23,6 +23,13 @@ spring:
           uri: lb://WEBSOCKET-SERVER
           predicates:
             - Path=/websocket/connect
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allow-credentials: false
+            allowedHeaders: "*"
+            allowedMethods: "*"
 eureka:
   instance:
     prefer-ip-address: true
