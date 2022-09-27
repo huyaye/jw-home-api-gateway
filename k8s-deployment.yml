@@ -46,6 +46,7 @@ metadata:
 spec:
   ports:
     - port: 9090 #CHANGE
+      name: http-traffic
       protocol: TCP
       targetPort: 9090 #CHANGE
   selector:
@@ -53,3 +54,15 @@ spec:
   sessionAffinity: None #CHANGE
 #  type: NodePort
   type: LoadBalancer
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: api-gateway-monitor
+spec:
+  selector:
+    matchLabels:
+      app: api-gateway
+  endpoints:
+    - port: http-traffic
+      path: "/actuator/prometheus"

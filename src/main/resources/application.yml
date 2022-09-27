@@ -30,6 +30,14 @@ spring:
             allow-credentials: false
             allowedHeaders: "*"
             allowedMethods: "*"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
 eureka:
   instance:
     prefer-ip-address: true
